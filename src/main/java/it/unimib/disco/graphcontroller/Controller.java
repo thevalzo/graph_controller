@@ -142,7 +142,7 @@ class Controller {
 	       else if (language.equals("sparql")){
 	    	   traversal = SparqlToGremlinCompiler.convertToGremlinTraversal(g, query);
 	       }
-
+	       System.out.println(traversal.explain());
 	       Bytecode traversalByteCode = traversal.asAdmin().getBytecode();
 	       List<String> result = new ArrayList<String>(); 
 	       result=JavaTranslator.of(graph.traversal()).translate(traversalByteCode).toStream().map(Object:: toString).collect(Collectors.toList());

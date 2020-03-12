@@ -73,8 +73,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tinkerpop.version>3.3.3</tinkerpop.version>
 		<janusgraph.version>0.3.1</janusgraph.version>
+    	<hbase.version>1.2.0</hbase.version>
 	    <maven.compiler.source>1.8</maven.compiler.source>
     	<maven.compiler.target>1.8</maven.compiler.target>
+    
 	</properties>
 <repositories>
    <repository>
@@ -90,7 +92,11 @@
 			    <version>4.12</version>
 			    <scope>test</scope>
 			</dependency>
-		
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-shaded-client</artifactId>
+                <version>1.2.0</version>
+            </dependency>
 	        <dependency>
             <groupId>org.apache.jena</groupId>
             <artifactId>apache-jena-libs</artifactId>

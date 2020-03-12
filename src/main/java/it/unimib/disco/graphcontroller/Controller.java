@@ -67,9 +67,10 @@ class Controller {
        options.addOption("l", "language", true, "language of the query");
        options.addOption("q", "query", true, "query to execute");
        
-       Graph graph =  TinkerGraph.open();
+       Graph graph = JanusGraphFactory.open("../../janusgraph-0.3.1-hadoop2/conf/janusgraph-hbase-es.properties");
+	   //Graph graph =  TinkerGraph.open();
        GraphTraversalSource g = graph.traversal();
-       graph.io(GraphMLIo.build()).readGraph("C:\\Users\\marco\\Documents\\Workspaces\\janusgraphaccesscontrol\\data\\users-privileges-civilian.graphml");
+       //graph.io(GraphMLIo.build()).readGraph("C:\\Users\\marco\\Documents\\Workspaces\\janusgraphaccesscontrol\\data\\users-privileges-civilian.graphml");
 
        
 

@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.*;
 import java.util.stream.Collectors;
@@ -85,6 +87,7 @@ class Controller {
        ScriptEngine engine = new GremlinGroovyScriptEngine();
        javax.script.Bindings bindings = engine.createBindings();
 
+       Long start_time = java.lang.System.currentTimeMillis();
        
        if (commandLine.hasOption("user")) {
     	   
@@ -140,8 +143,11 @@ class Controller {
 	       }
 
 	       Bytecode traversalByteCode = traversal.asAdmin().getBytecode();
-	       System.out.println(JavaTranslator.of(graph.traversal()).translate(traversalByteCode).toStream().map(Object:: toString).collect(Collectors.toList()));
-
+	       List<String> result = new ArrayList<String>(); 
+	       result=JavaTranslator.of(graph.traversal()).translate(traversalByteCode).toStream().map(Object:: toString).collect(Collectors.toList());
+	       Long end_time = java.lang.System.currentTimeMillis();
+	       System.out.println(result);
+	       System.out.println(end_time-start_time);
 	   }
 	   catch(Exception e) {
 		   e.printStackTrace();

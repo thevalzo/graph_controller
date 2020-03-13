@@ -88,7 +88,7 @@ class Controller {
        ScriptEngine engine = new GremlinGroovyScriptEngine();
        javax.script.Bindings bindings = engine.createBindings();
 
-       Long start_time = java.lang.System.currentTimeMillis();
+       
        
        if (commandLine.hasOption("user")) {
     	   
@@ -104,9 +104,14 @@ class Controller {
 	            	   bindings.put("g", gac.getCivilianStrategy(user));
 	        	   }
 	        	   else if (type.equals("military")) {
+	        		   Long start_time = java.lang.System.currentTimeMillis();
+	        		   
 	        		   g = gac.getMilitaryStrategy(user);
 	            	   bindings.put("g", gac.getMilitaryStrategy(user));
-	        		  
+	            	   
+	        	       Long end_time = java.lang.System.currentTimeMillis();
+	                   Long total_time = end_time-start_time;
+	                   System.out.println("Time for building strategy: "+total_time.toString());
 	        	   }
 	           }
     	   }
@@ -119,7 +124,7 @@ class Controller {
     	   g = graph.traversal();
     	   bindings.put("g", graph.traversal());
        }
-       
+       Long start_time2 = java.lang.System.currentTimeMillis();
        try {
 	       String language = "gremlin";
 	       String query = "g.V()";
@@ -142,13 +147,14 @@ class Controller {
 	       else if (language.equals("sparql")){
 	    	   traversal = SparqlToGremlinCompiler.convertToGremlinTraversal(g, query);
 	       }
-	       System.out.println(traversal.explain());
+
 	       Bytecode traversalByteCode = traversal.asAdmin().getBytecode();
 	       List<String> result = new ArrayList<String>(); 
 	       result=JavaTranslator.of(graph.traversal()).translate(traversalByteCode).toStream().map(Object:: toString).collect(Collectors.toList());
-	       Long end_time = java.lang.System.currentTimeMillis();
+	       Long end_time2 = java.lang.System.currentTimeMillis();
 	       System.out.println(result);
-	       System.out.println(end_time-start_time);
+	        Long total_time2 = end_time2-start_time2;
+	        System.out.println("Time for excecuting query: "+total_time2.toString());
 	   }
 	   catch(Exception e) {
 		   e.printStackTrace();
